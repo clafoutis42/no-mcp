@@ -1,0 +1,44 @@
+name: Publish to PyPI
+
+on:
+  release:
+    types: [created]
+
+permissions:
+  contents: read
+
+jobs:
+  publish:
+    name: Build and publish to PyPI
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.14"
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@v5
+
+      - name: Extract version from tag
+        id: get_version
+        run: |
+          TAG="${{ github.event.release.tag_name }}"
+          echo "version=${TAG#V}" >> $GITHUB_OUTPUT
+
+      - name: Update version in pyproject.toml
+        run: |
+          VERSION="${{ steps.get_version.outputs.version }}"
+          sed -i "s/^version = .*/version = \"$VERSION\"/" pyproject.toml
+
+      - name: Build package
+        run: uv build
+
+      - name: Publish to PyPI
+        uses: pypa/gh-action-pypi-publish@release/v1
+        with:
+          password: ${{ secrets.PYPI_API_TOKEN }}
