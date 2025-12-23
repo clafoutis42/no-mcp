@@ -1,6 +1,7 @@
 # No MCP
 
 [![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
+[![PyPI version](https://img.shields.io/pypi/v/no-mcp-server.svg)](https://pypi.org/project/no-mcp-server/)
 
 A Model Context Protocol (MCP) server that wraps [NaaS (No as a Service)](https://github.com/hotheadhacker/no-as-a-service).
 
