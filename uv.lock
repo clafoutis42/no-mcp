@@ -1054,8 +1054,8 @@ wheels = [
 ]
 
 [[package]]
-name = "no-mcp-tool"
-version = "0.0.1"
+name = "no-mcp-server"
+version = "0.0.2"
 source = { editable = "." }
 dependencies = [
     { name = "dependency-injector" },
