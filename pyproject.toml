@@ -1,10 +1,10 @@
 [project]
-name = "no-mcp-tool"
+name = "no-mcp-server"
 version = "0.0.1"
 description = "MCP wrapper for NaaS."
 authors = [{ name = "Charles Labourier", email = "charles@clabouri.dev" }]
 readme = "README.md"
-requires-python = "~=3.14.2"
+requires-python = ">=3.11"
 dependencies = [
     "pydantic>=2.10.6,<3",
     "pydantic-settings>=2.7.1,<3",
@@ -32,7 +32,7 @@ dev = [
 ]
 
 [project.scripts]
-no-mcp = "app.presentation.mcp.main:mcp.run"
+no-mcp-server = "app.presentation.mcp.main:mcp.run"
 
 [tool.uv]
 
