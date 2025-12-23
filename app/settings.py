@@ -1,5 +1,6 @@
 from datetime import datetime
 
+from pydantic import HttpUrl
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
 
@@ -13,6 +14,7 @@ class Settings(BaseSettings):
     LOG_LEVEL: str = "info"
 
     # NaaS
+    NO_BASE_URL: HttpUrl = "https://naas.isalman.dev"
 
     # API Configuration
     API_PORT: int = 8000
