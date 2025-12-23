@@ -1,0 +1,77 @@
+[project]
+name = "no-mcp"
+version = "0.0.1"
+description = "MCP wrapper for NaaS."
+authors = [{ name = "Charles Labourier", email = "charles@clabouri.dev" }]
+readme = "README.md"
+requires-python = "~=3.14.2"
+dependencies = [
+    "pydantic>=2.10.6,<3",
+    "pydantic-settings>=2.7.1,<3",
+    "loguru>=0.7.3,<0.8",
+    "dependency-injector>=4.45.0,<5",
+    "httpx[http2]>=0.28.1,<0.29",
+    "fastapi>=0.124.4,<0.125",
+    "uvicorn>=0.40.0,<0.41",
+    "mcp>=1.13.0",
+    "gunicorn>=23.0.0",
+    "fastmcp>=2.10.6",
+]
+
+[dependency-groups]
+dev = [
+    "coverage>=7.5.0,<8",
+    "pre-commit>=4.2.0,<5",
+    "pytest>=9.0.2,<10",
+    "pytest-asyncio>=1.1.0,<2",
+    "pytest-cov>=7.0.0,<8",
+    "ipython>=9.4.0,<10",
+    "polyfactory>=3.2.0,<4",
+    "pytest-postgresql>=7.0.2,<8",
+    "pytest-lazy-fixtures>=1.1.2,<2",
+    "pytest-httpx>=0.36.0,<0.37",
+    # Until https://github.com/astral-sh/ruff/issues/14118 is resolved
+    "ruff @ git+https://github.com/matthewlloyd/ruff@0.12.0-f-string-consistent-quotes",
+]
+
+[tool.uv]
+
+[tool.hatch.build.targets.sdist]
+include = ["app"]
+
+[tool.hatch.build.targets.wheel]
+include = ["app"]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.poe.tasks]
+test = { cmd = "pytest tests/", help = "Run tests" }
+test-ci = { cmd = "pytest --cov app --cov-report term --cov-report xml:coverage.xml --cov-fail-under=50 --junit-xml=junit-test.xml", help = "Run tests for gitlab ci" }
+test-cov = { cmd = "pytest --cov=app tests", help = "Run tests with coverage" }
+cov = { cmd = "coverage report --fail-under=80", help = "Generate coverage report" }
+lint = { cmd = "ruff check",  help = "Run linting task"}
+
+[tool.poe.tasks.format]
+help = "Run formatters"
+sequence = ["ruff format", "ruff check --fix"]
+default_item_type = "cmd"
+
+[tool.poe.tasks.ci]
+help = "Run all checks (test, lint, typecheck)"
+sequence = ["lint", "test-cov", "cov"]
+
+[tool.poe.tasks.build-image]
+help = "Build Docker image"
+cmd = "docker build -t no-mcp-${TARGET:-production} --target ${TARGET:-production} ."
+
+[tool.ruff]
+target-version = "py312"
+
+[tool.ruff.format]
+quote-style = "double"
+f-string-consistent-quotes = true
+
+[tool.ruff.lint]
+extend-select = ["E501", "I"]
