@@ -11,10 +11,7 @@ dependencies = [
     "loguru>=0.7.3,<0.8",
     "dependency-injector>=4.45.0,<5",
     "httpx[http2]>=0.28.1,<0.29",
-    "fastapi>=0.124.4,<0.125",
-    "uvicorn>=0.40.0,<0.41",
     "mcp>=1.13.0",
-    "gunicorn>=23.0.0",
     "fastmcp>=2.10.6",
 ]
 
@@ -61,10 +58,6 @@ default_item_type = "cmd"
 [tool.poe.tasks.ci]
 help = "Run all checks (test, lint, typecheck)"
 sequence = ["lint", "test-cov", "cov"]
-
-[tool.poe.tasks.build-image]
-help = "Build Docker image"
-cmd = "docker build -t no-mcp-${TARGET:-production} --target ${TARGET:-production} ."
 
 [tool.ruff]
 target-version = "py312"
