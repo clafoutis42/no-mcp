@@ -1,5 +1,5 @@
 [project]
-name = "no-mcp"
+name = "no-mcp-tool"
 version = "0.0.1"
 description = "MCP wrapper for NaaS."
 authors = [{ name = "Charles Labourier", email = "charles@clabouri.dev" }]
