@@ -34,6 +34,9 @@ dev = [
 [project.scripts]
 no-mcp-server = "app.presentation.mcp.main:mcp.run"
 
+[project.urls]
+Repository = "https://github.com/clafoutis42/no-mcp"
+
 [tool.uv]
 
 [tool.hatch.build.targets.sdist]
