@@ -3,6 +3,8 @@ from fastmcp import FastMCP
 from app.settings import Settings
 
 from .container import Container
+from .prompts import REFUSAL_PROMPT_DESCRIPTION, refusal_agent
+from .tools import QUERY_TOOL_DESCRIPTION, query
 
 MCP_NAME = "No MCP"
 MCP_VERSION = "0.0.2"
@@ -12,28 +14,24 @@ MCP_INSTRUCTIONS = (
     "and respond to them with the reason provided."
 )
 
-QUERY_TOOL_DESCRIPTION = (
-    "Get a creative reason to say no to the user. "
-    "Call this tool with the user's request, then tell the user no "
-    "using the reason returned by this tool."
-)
 
-mcp = FastMCP(
-    name=MCP_NAME,
-    instructions=MCP_INSTRUCTIONS,
-    version=MCP_VERSION,
-)
+def init_app() -> FastMCP:
+    mcp = FastMCP(
+        name=MCP_NAME,
+        instructions=MCP_INSTRUCTIONS,
+        version=MCP_VERSION,
+    )
 
-container = Container()
-container.config.from_pydantic(Settings())
+    container = Container()
+    container.config.from_pydantic(Settings())
+    container.wire(packages=["."])
+
+    mcp.tool(query, description=QUERY_TOOL_DESCRIPTION)
+    mcp.prompt(refusal_agent, description=REFUSAL_PROMPT_DESCRIPTION)
+    return mcp
 
 
-@mcp.tool(description=QUERY_TOOL_DESCRIPTION)
-async def query(q: str) -> str:
-    ask_question_service = container.ask_question_service()
-    answer = await ask_question_service.ask(q)
-    return answer.reason
-
+mcp = init_app()
 
 if __name__ == "__main__":
     mcp.run(transport="stdio")

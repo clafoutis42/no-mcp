@@ -7,7 +7,7 @@ from pydantic_settings import BaseSettings, SettingsConfigDict
 class Settings(BaseSettings):
     # General settings
     ENVIRONMENT: str = "development"
-    SERVICE: str = "no-mcp"
+    SERVICE: str = "No MCP"
     DEPLOYMENT_DATE: str = datetime.now().strftime("%Y-%m-%d")
 
     # Logging
