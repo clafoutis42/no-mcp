@@ -32,7 +32,7 @@ dev = [
 ]
 
 [project.scripts]
-no-mcp-server = "app.presentation.mcp.main:mcp.run"
+no-mcp-server = "app.presentation.mcp.main:main"
 
 [project.urls]
 Repository = "https://github.com/clafoutis42/no-mcp"

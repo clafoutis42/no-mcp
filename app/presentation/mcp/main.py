@@ -21,17 +21,19 @@ def init_app() -> FastMCP:
         instructions=MCP_INSTRUCTIONS,
         version=MCP_VERSION,
     )
-
-    container = Container()
-    container.config.from_pydantic(Settings())
-    container.wire(packages=["."])
-
     mcp.tool(query, description=QUERY_TOOL_DESCRIPTION)
     mcp.prompt(refusal_agent, description=REFUSAL_PROMPT_DESCRIPTION)
     return mcp
 
 
-mcp = init_app()
+def main():
+    container = Container()
+    container.config.from_pydantic(Settings())
+    container.wire(packages=["."])
+
+    mcp = init_app()
+    mcp.run(**container.mcp_run_config())
+
 
 if __name__ == "__main__":
-    mcp.run(transport="stdio")
+    main()

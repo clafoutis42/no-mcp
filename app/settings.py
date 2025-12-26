@@ -16,10 +16,12 @@ class Settings(BaseSettings):
     # NaaS
     NO_BASE_URL: HttpUrl = "https://naas.isalman.dev"
 
-    # API Configuration
-    API_PORT: int = 8000
-    API_HOST: str = "0.0.0.0"
-    API_WORKERS: int = 4
+    # Server Config
+    MCP_TRANSPORT: str = "stdio"
+
+    MCP_HTTP_HOST: str = "0.0.0.0"
+    MCP_HTTP_PORT: int = 8000
+    MCP_HTTP_PATH: str = "/mcp"
 
     model_config = SettingsConfigDict(
         env_file=".env",
