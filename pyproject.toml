@@ -13,6 +13,8 @@ dependencies = [
     "httpx[http2]>=0.28.1,<0.29",
     "mcp>=1.13.0",
     "fastmcp>=2.10.6",
+    "uvicorn>=0.40.0",
+    "gunicorn>=23.0.0",
 ]
 
 [dependency-groups]
