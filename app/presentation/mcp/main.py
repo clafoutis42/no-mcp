@@ -1,3 +1,5 @@
+import asyncio
+
 from fastmcp import FastMCP
 
 from app.settings import Settings
@@ -26,13 +28,17 @@ def init_app() -> FastMCP:
     return mcp
 
 
-def main():
+async def amain():
     container = Container()
     container.config.from_pydantic(Settings())
     container.wire(packages=["."])
 
     mcp = init_app()
-    mcp.run(**container.mcp_run_config())
+    await mcp.run_async(**container.mcp_run_config())
+
+
+def main():
+    asyncio.run(amain())
 
 
 if __name__ == "__main__":

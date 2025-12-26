@@ -6,7 +6,7 @@ REFUSAL_PROMPT_DESCRIPTION = (
 )
 
 
-def refusal_agent() -> str:
+async def refusal_agent() -> str:
     """Prompt that configures AI agents to refuse all user requests.
 
     Returns a system prompt that instructs agents to use the query tool
