@@ -75,7 +75,7 @@ Or with a specific version:
   "mcpServers": {
     "no-mcp": {
       "command": "uvx",
-      "args": ["no-mcp-server@0.2.0"]
+      "args": ["no-mcp-server@0.2.1"]
     }
   }
 }
