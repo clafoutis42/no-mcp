@@ -9,7 +9,27 @@ A Model Context Protocol (MCP) server that wraps [NaaS (No as a Service)](https:
 
 This is a joke MCP server that continues the satirical spirit of NaaS. When your AI agent asks any question through this server, it will always respond with "no" along with a creative reason. Perfect for when you want your AI to be consistently negative or just want to add some humor to your MCP setup.
 
+## Quick Start
+
+### Use the Hosted Instance
+
+No installation required! Use the publicly hosted MCP server:
+
+```json
+{
+  "mcpServers": {
+    "no-mcp": {
+      "url": "https://no-mcp.clabouri.dev/mcp"
+    }
+  }
+}
+```
+
+Add this configuration to your MCP client settings (e.g., Claude Desktop) to start using the refusal agent immediately.
+
 ## Installation
+
+If you prefer to self-host or run locally:
 
 ```bash
 uv pip install no-mcp-server
