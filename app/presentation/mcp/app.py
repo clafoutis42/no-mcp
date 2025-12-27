@@ -1,6 +1,9 @@
 from fastmcp import FastMCP
 from fastmcp.server.http import StarletteWithLifespan
 
+from app.settings import Settings
+
+from .container import Container
 from .prompts import REFUSAL_PROMPT_DESCRIPTION, refusal_agent
 from .tools import QUERY_TOOL_DESCRIPTION, query
 
@@ -14,13 +17,21 @@ MCP_INSTRUCTIONS = (
 
 
 def init_app() -> FastMCP:
+    container = Container()
+    container.config.from_pydantic(Settings())
+    container.wire(modules=[".tools"])
+
     mcp = FastMCP(
         name=MCP_NAME,
         instructions=MCP_INSTRUCTIONS,
         version=MCP_VERSION,
     )
+
+    mcp.container = container
+
     mcp.tool(query, description=QUERY_TOOL_DESCRIPTION)
     mcp.prompt(refusal_agent, description=REFUSAL_PROMPT_DESCRIPTION)
+
     return mcp
 
 

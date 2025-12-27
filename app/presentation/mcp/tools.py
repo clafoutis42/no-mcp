@@ -1,5 +1,5 @@
-from dependency_injector.wiring import Provide
-from fastmcp.dependencies import Depends
+from dependency_injector.wiring import Provide, inject
+from docket import Depends
 
 from app.application.services.ask_question_service import AskQuestionService
 
@@ -12,11 +12,16 @@ QUERY_TOOL_DESCRIPTION = (
 )
 
 
+@inject
+def depends_ask_question_service(
+    ask_question_service: AskQuestionService = Provide[Container.ask_question_service],
+) -> AskQuestionService:
+    return ask_question_service
+
+
 async def query(
     q: str,
-    ask_question_service: AskQuestionService = Depends(
-        Provide[Container.ask_question_service]
-    ),
+    ask_question_service: AskQuestionService = Depends(depends_ask_question_service),
 ) -> str:
     """Get a creative reason to decline a user request.
 
